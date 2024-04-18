@@ -20,7 +20,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Programming Language :: Python :: 3",
 ]
-dynamic = ["dependencies", "version"]
+dynamic = ["dependencies", "optional-dependencies", "version"]
 
 [tool.setuptools_scm]
 version_file = "cli/_version.py"
@@ -30,7 +30,11 @@ Homepage = "https://github.com/instruct-lab/cli"
 Issues = "https://github.com/instruct-lab/cli/issues"
 
 [tool.setuptools.dynamic]
-dependencies = {file = ["requirements.txt"]}
+dependencies = {file = ["requirements/base.in", "requirements/torch.txt"]}
+optional-dependencies.test = { file = ["requirements/test.in"] }
+optional-dependencies.cuda = { file = ["requirements/torch-cuda.in"] }
+optional-dependencies.cpu = { file = ["requirements/torch-cpu.in"] }
+optional-dependencies.rocm57 = { file = ["requirements/torch-rocm.in"] }
 
 [project.scripts]
 # defines lab executable
@@ -44,3 +48,9 @@ include = ["cli", "cli.chat", "cli.generator", "cli.train", "cli.train.lora_mlx"
 [tool.setuptools.package-data]
 "*" = ["quantize"]
 "cli.schema.v1" = ["*.json"]
+
+# https://github.com/jazzband/pip-tools
+# https://pip-compile-multi.readthedocs.io/en/latest/
+# pip-compile-multi --live --use-cache --allow-unsafe --annotate-index
+[tool.pip-tools]
+generate-hashes = true

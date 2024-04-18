@@ -1,0 +1,43 @@
+# SPDX-License-Identifier: Apache-2.0
+
+# versions are constrained in constraints.txt
+-c constraints.txt
+
+# torch and packages depending on torch are in "torch.txt" as well as in
+# separate torch.cuda.in, torch-cpu.in, and torch-rocm5.7.in files. They
+# are not included in base.in, because that would add CUDA packages to
+# CPU and ROCm flavors.
+
+click
+click-didyoumean
+datasets
+gguf
+GitPython
+# Linux: 4-bit quantization with BitsAndBytes is not ready to use, yet.
+# see https://github.com/instruct-lab/cli/issues/579
+# bitsandbytes; sys_platform=='linux' and platform_machine=='x86_64'
+httpx
+jsonschema
+# pin version, lift restriction after testing >=0.2.58
+# see https://github.com/abetlen/llama-cpp-python/issues/1286
+llama_cpp_python[server]
+mlx; sys_platform == 'darwin' and platform_machine == 'arm64'
+numpy
+openai
+prompt-toolkit
+pydantic
+pydantic_yaml
+PyYAML
+rich
+rouge-score
+sentencepiece
+tokenizers
+toml
+tqdm
+transformers
+wandb
+langchain-text-splitters
+setuptools
+# the below library should NOT be imported into any python files
+# it is for CLI usage ONLY
+yamllint

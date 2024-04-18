@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: Apache-2.0
+
+# No extra index needed, PyTorch from PyPI has CUDA bindings.
+-c constraints.txt
+-r base.in
+
+# BEGIN TORCH
+torch
+accelerate
+peft
+trl
